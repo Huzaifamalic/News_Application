@@ -3,13 +3,15 @@ async function news(category) {
   const query = category || searchInput || "latest";
   const container = document.getElementById('news-container');
   const loading = document.getElementById('loading');
+  const key = '065114e97a86b175381999eb533aa566';
 
   try {
     loading.style.display = "block";
     container.innerHTML = "";
 
-    const url = `https://newsapi.org/v2/everything?q=${query}&sortBy=publishedAt&apiKey=851c2eb87d974d2f8c4e6dd02c60d0df`;
+    const url = `https://gnews.io/api/v4/search?q=${query}&lang=en&max=5&apikey=${key}`;
     let res = await fetch(url);
+    console.log(res);
 
     if (!res.ok) {
       throw new Error("Failed to fetch news");
@@ -27,7 +29,7 @@ async function news(category) {
       let card = `
         <div class="col-md-4 mb-4">
           <div class="card h-100 shadow-sm border-0">
-            <img src="${article.urlToImage || 'https://via.placeholder.com/400x200'}" 
+            <img src="${article.image || 'https://via.placeholder.com/400x200'}" 
                  class="card-img-top" alt="News Image">
             <div class="card-body">
               <h5 class="card-title">${article.title}</h5>
